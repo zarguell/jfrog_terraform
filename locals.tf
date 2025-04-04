@@ -12,4 +12,14 @@ locals {
       "ext-conda-msys2-remote"
     ]
   }
+
+  docker_remote_repos = {
+    "ext-docker-dockerhub"  = "https://registry-1.docker.io"
+  }
+
+  virtual_docker_repos = {
+    "ext-docker" = [
+      "ext-docker-dockerhub"
+    ]
+  }
 }

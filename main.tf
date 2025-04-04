@@ -56,3 +56,23 @@ module "virtual_conda" {
   ]
   project_key = local.project_key
 }
+
+# Remote Docker Repos
+module "remote_docker" {
+  for_each    = local.docker_remote_repos
+  source      = "./modules/remote_docker_repo"
+  repo_key    = each.key
+  repo_url    = each.value
+  project_key = local.project_key
+}
+
+# Virtual Docker Repos
+module "virtual_docker" {
+  for_each    = local.virtual_docker_repos
+  source      = "./modules/virtual_docker_repo"
+  repo_key    = each.key
+  repositories = [
+    for repo in each.value : module.remote_docker[repo].repo_key
+  ]
+  project_key = local.project_key
+}
